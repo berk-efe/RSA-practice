@@ -1,21 +1,21 @@
 import math
 import time
 
+LIMIT = 9999
 
 def main():
-    limit = 99999
-    keys = generate_keys(limit=limit)
+    keys = generate_keys(limit=LIMIT)
     print(keys)
-    plain_text = input("Give Message: \n")
-    start_time_enc = time.time()
+    plain_text = input("Give Message: \n") # ABC
+    start_time_enc = time.time() # start time
     cypher_text = encrypt_data(plain_text, keys["public_key"])
-    encryption_time = time.time() - start_time_enc
-    print(cypher_text)
+    encryption_time = time.time() - start_time_enc # end time
+    print(f"cypher text: {cypher_text}")
     
     start_time_dec = time.time()
     old_plain_text = decrypt_data(cypher_text, keys["private_key"])
     decryption_time = time.time() - start_time_dec
-    print(old_plain_text)
+    print(f"old plain text: {old_plain_text}")
     print(f"Encryption: {encryption_time} seconds \n Decryption: {decryption_time} seconds")
     
     pass
@@ -57,6 +57,7 @@ def generate_primes(limit:int) -> list[int]:
 def generate_keys(limit:int) -> dict[tuple]:
     primes = generate_primes(limit=limit)
     print(primes)
+    
     p = primes[0]
     q = primes[1]
     
@@ -64,17 +65,21 @@ def generate_keys(limit:int) -> dict[tuple]:
     N = p*q # 35
     phiN = (p-1)*(q-1) # 24
     
+    # THESE EXAMPLES ONLY WORK FOR SMALL NUMBERS AS PLAIN TEXT!
+    # THEY WONT WORK IF THE NUMBER YOU ARE TRYING TO ENCRYPT IS BIGGER THAN THE MOD!!!
+    
     # 1 < e < phiN (24)
+    # this loop here can be optimised further
     E = 0
     print("N", N, phiN)
     for i in range(phiN, 3, -1):
         if N % i != 0 and phiN % i != 0:
-            print(i)
+            print(f"coprime with N and phiN: {i}")
             E = i
             break
 
     
-    # d*e(23) % phiN(24) == 1
+    # d*e % phiN == 1
     D = phiN*2-1
     print("D", D)
 
@@ -88,7 +93,8 @@ def generate_keys(limit:int) -> dict[tuple]:
 
 # encryption
 def encrypt_data(t:str, public_key:tuple) -> list[int]:
-    data = string2int(t) # [65, 66, 67]
+    data = string2int(t) # [65, 66, 67] "ABC"
+    print(data)
     E = public_key[0]
     N = public_key[1]
     
@@ -99,10 +105,11 @@ def encrypt_data(t:str, public_key:tuple) -> list[int]:
         cypher_i = pow(i, E, N)
         cypher_data.append(cypher_i)
     
+    
     return cypher_data
 
 # decryption
-def decrypt_data(l_i:list[int], private_key:tuple):
+def decrypt_data(l_i:list[int], private_key:tuple) -> str:
     D = private_key[0]
     N = private_key[1]
     
@@ -112,6 +119,7 @@ def decrypt_data(l_i:list[int], private_key:tuple):
         refined_i = pow(i, D, N)
         refined_data.append(refined_i)
     
+    print(f"[DEBUG_2] {refined_data}")
     result = int2string(refined_data)
     
     return result
