@@ -61,15 +61,14 @@ def generate_keys(limit:int) -> dict[tuple]:
     p = primes[0]
     q = primes[1]
     
-    # p=7, q=5
-    N = p*q # 35
-    phiN = (p-1)*(q-1) # 24
+    # p=2, q=7
+    N = p*q # 14
+    phiN = (p-1)*(q-1) # 6
     
     # THESE EXAMPLES ONLY WORK FOR SMALL NUMBERS AS PLAIN TEXT!
     # THEY WONT WORK IF THE NUMBER YOU ARE TRYING TO ENCRYPT IS BIGGER THAN THE MOD!!!
     
-    # 1 < e < phiN (24)
-    # this loop here can be optimised further
+    # 1 < e < phiN (6)
     E = 0
     print("N", N, phiN)
     for i in range(phiN, 3, -1):
