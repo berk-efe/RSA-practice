@@ -54,7 +54,7 @@ def generate_primes(limit:int) -> list[int]:
 
 
 # generating keys
-def generate_keys(limit:int) -> dict[tuple]:
+def generate_keys(limit:int) -> dict:
     primes = generate_primes(limit=limit)
     print(primes)
     
