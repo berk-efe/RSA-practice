@@ -64,7 +64,7 @@ There have been 2 problems i have encountered.
 
 You see, in my code i switch chars with their ascii values. When i pick a Modular (N) value that is too small, the mod of the ascii value of the char will be greater than the ascii value of the char. So you better pick a big N value.
 
-Second problem is, do you remember the i^E % N function? Well when you just enter this function as it is it will take so much time to compute. So there is a better way. pow() function which comes built-in with python. It is much faster than the i^E % N function. So i recommend you to use pow() function. Same goes for decryption too.
+Second problem is, do you remember the `i^E % N` function? Well when you just enter this function as it is it will take so much time to compute. So there is a better way. `pow()` function which comes built-in with python. It is much faster than the `i^E % N` function. So i recommend you to use `pow()` function. Same goes for decryption too.
 
 
 
